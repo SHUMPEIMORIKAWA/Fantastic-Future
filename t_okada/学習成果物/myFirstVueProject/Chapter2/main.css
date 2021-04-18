@@ -1,0 +1,10 @@
+/* StyleSheet */
+
+/* これらのクラス宣言はまだ謎 */
+.v-enter-active, .v-leave-active{
+	transition: opacity 1s;
+}
+
+.v-enter, .v-leave-to{
+	opacity: 0;
+}

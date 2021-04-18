@@ -1,0 +1,373 @@
+データバインディングについて
+
+データバインディングとは
+Vueのテンプレートで使用するデータは全てリアクティブデータとして定義する必要がある。、
+
+リアクティブデータとは
+
+Vueのシステムにおいて定義されるデータは全てリアクティブデータとして定義される。
+リアクティブデータは反応できるデータという意味で、書き換えられたさいにVueが反応して自動で
+処理を行えるようになっている仕組みのためのデータである。
+
+Vueコンポーネントのdataオプションに書いたものは
+全てインスタンス作成時にリアクティブデータへと変換される。
+
+var state = {count: 0};
+var app = new Vue({
+    el: "#app",
+    data: {
+        state: state
+    }
+});
+state.count++;
+
+上記のようにdataオプションの外に定義されたデータでも、
+Vueのデータとして登録するとリアクティブデータに変換される。
+
+ただし、
+dataオブジェクトの内容は後から追加ができないため、
+下記のように内容が決まっていない場合でも初期値や空のデータとして定義をしておく必要がある。
+
+var state = {count: 0};
+var app = new Vue({
+    el: "#app",
+    data: {
+        newTodoText: "",
+        visitCount: 0,
+        hideCompletedTodos: false,
+        todos[],
+        error: nill
+    }
+});
+state.count++;
+
+あとから代入されるデータと同じ型で定義する必要があるよね。
+
+
+テキストのデータバインディング
+dataオプション内のテキスト（Message）などのプロパティを画面に表示するには、
+プロパティ名を{{}}で囲う必要がある。（mustache（マスタッシュ）記法という）
+mustache内の操作ができるのは、Vueがバインドしている要素の中に限る。
+
+var app = new Vue({
+    el: "#app",
+    data: {
+        message: Vue.js!
+    }
+})
+
+<div id = "app">
+    <p>hello {{message}}</p>
+</div>
+
+↓実際のHTMLの描画は
+
+<div id = "app">
+    <p>hello Vue.js@</p>
+</div>
+
+messageプロパティをバインドしている。
+読み込んだ段階でバインドした値をプロパティ値に書き換えている。
+
+ネストされたオブジェクトのプロパティや、配列の要素も使用できる。
+
+var app = new Vue({
+	el: '#app',
+	data:{
+		message: {
+			value: "hello Vue.js"
+		},
+		list:["りんご","ばなな","ぶどう"]
+	}
+}
+こういう具合。valueはString型なので、Stringのプロパティも使用可能（Lengthなど）。
+
+<p>{{1+1}}</p>
+このような記述をした場合、
+<p>2</p>
+
+こういう記述にすることもできる。
+mustacheの中に、Javascriptの式を記述することも可能。
+
+ただし、
+<p>{{var foo = message}}</p>
+このような記述は、式ではなく文なので、エラーが発生してしまう、
+
+Javascriptを書く時、
+イコールの左側に記述することができるものを式と考えるとわかりやすい。
+
+{{message.length <= 10 ? "10文字以上" : "10文字未満"}}
+{{math.round(3.14)}}
+
+このように、三項演算子や、関数の戻り値を出すことも可能。
+
+ただし、全て文字列に変換された状態で出力されます。
+
+
+
+属性のデータバインディング
+Mustacheはテキストコンテンツ特有の記法のため、属性に使用することはできない
+<p id = {{id}}></p>
+このような記法はできない。（エラーがおきます）
+
+属性へのバインドには、v-bindディレクティブを使用する。
+
+<input type = "text" v-bind:value = "message">
+
+このように記述する。
+だが、「v-bind」の記述は「:」で省略することも可能。
+
+<input type = "text" :value = "message">
+このようになる。
+
+上記2つを記述した場合、実際のHTMLは以下のようになる。
+messageに"hello! vue.js"が代入されていた場合。
+<input type = "text" value="hello! vue.js">
+
+v-bindの修飾子
+    .prop
+     属性の代わりにDomのプロパティとしてバインドする。
+
+     <div v-bind:text-content.prop = "message"></div>
+     <div :text-content.prop = "message"></div>
+     DOMのtextContentプロパティにバインド
+
+     <div v-bind:scroll-top.prop = "scroll"></div>
+     <div :scroll-top.prop = "scroll"></div>
+     DOMのscrollTopプロパティにバインド
+
+    .camel
+    .sync
+
+<pre>{{$data}}</pre>
+これを記述すると、画面でJson形式でdataが確認できる。
+
+Class、Styleへのバインド
+この場合、少し特殊で値一つ一つを渡すのではなく、オブジェクトや配列として渡すと
+まとめていろいろな値を指定できる。
+
+var app = new Vue({
+	el: '#app',
+	data:{
+		message: {
+			value: "hello Vue.js"
+		},
+		list:["りんご","ばなな","ぶどう"],
+		num: 0,
+		alreadyEnteredText: "already",
+		scroll: 100,
+		count: 0,
+		item: {
+			id: 1,
+			// src: "item1.jpg",
+			alt: "商品サムネイル",
+			width:200,
+			height:200
+		},
+        ////////////////////////
+		isChild: false,
+		isActive: true,
+		textColor: "red",
+		bgColor: "lightGray"
+        /////////////////////////
+	},
+
+<p v-bind:class = "{child: isChild, 'is-active': isActive}">Text</p>
+<p v-bind:style = "{color: textColor, backgroundColor: bgColor}">Text</p>
+
+classはBoolを指定すると付けたり外したりすることがかのうなので、
+Bool型のプロパティを指定してあげればいい。
+
+Styleに関しては、みたまま。
+これはもともとのCSSの書き方とも似ているので、わかりやすい。
+
+また、上記にもあるように、オブジェクトの書き方のみでなく、
+配列を用いた書き方も存在する。
+
+状況によって持たせるものを変えたい場合は、三項演算子が有効
+参考演算子は式なので、オブジェクトの形で持たせることができない。
+なので配列を用いた書き方をする必要があります。
+下記に示す。
+
+<p v-bind:class = "[isActive? 'active' : 'normal']">Text</p>
+
+上記のJSで、isActiveはTrueなので、この場合、クラスに持たせるのはActiveということになります。
+
+classに直接オブジェクトの形を書くのではなくて、オブジェクトのデータを渡すこともできます。
+
+var app = new Vue({
+	el: '#app',
+	data:{
+		message: {
+			value: "hello Vue.js"
+		},
+		list:["りんご","ばなな","ぶどう"],
+		num: 0,
+		alreadyEnteredText: "already",
+		scroll: 100,
+		count: 0,
+		item: {
+			id: 1,
+			// src: "item1.jpg",
+			alt: "商品サムネイル",
+			width:200,
+			height:200
+		},
+		isChild: false,
+		isActive: true,
+		textColor: "red",
+		bgColor: "lightGray",
+        //////////////////////////////
+		classObject:{
+			child: true,
+			'is-active': false
+		},
+		styleObject:{
+			color: 'red',
+			backgroundColor: 'lightGray'  
+		}
+        ////////////////////////////
+	},
+
+    <p v-bind:class = "classObject">Text</p>
+	<p v-bind:style = "styleObject">Text</p>
+
+このような表記の方法でもいい。このほうがすっきりしていて見やすい。
+
+複数の属性に大してのバインディングを行う場合。
+上記のDataオブジェクトにある、Itemオブジェクトのようなものを渡すためにすべて記述すると大変
+<img v-bind:src = "item.src"
+    v-bind:alt = "item.alt"
+    v-bind:width = "item.width"
+    v-bind:height = "item.height"
+    >
+このように冗長になってしまい、改修も時間がかかってしまう。
+その場合は
+
+<img v-bind = "item">
+
+このような記述方法でも同じ結果が得られる。
+また、おおまかには同じ設定にしたいが、ものによって一部だけ変えたい場合は
+
+<img v-bind = "item" v-bind:id = "'thumb-'+item.id">
+
+このように記述すれば、HTMLのIDの部分のみ他のものとは違ったものを持たせることができる。
+
+<img id="thumb-1" alt="商品サムネイル" width="200" height="200">
+
+このような結果が得られて、Idの部分のみ、itemオブジェクトのidとは違う値を持っていることがわかる。
+
+
+SVGのデータバインディングについて
+
+var app = new Vue({
+	el: '#app',
+	data:{
+		radius: 50
+	},
+
+    <svg xmlns = "http://www.w3.org/2000/svg" version = "1.1">
+	    <circle cx = "100" cy = "75" v-bind:r = "radius" fill = "lightpink"/>
+	</svg>
+	<input type = "range" min = "0" max = "100" v-model = "radius">
+
+円の半径をゲージで変化させるソース。よくわからないので、必要になったときにSVGはお勉強。
+
+
+テンプレートにおける条件分岐について
+Vueでは、Jsのソースではなく、テンプレート内で条件分岐が記述できる。先の三項演算子もそう。
+v-ifとv-showディレクティブでは、付与した要素の描画、または表示に条件を適用する。
+
+    var app = new Vue({
+	el: '#app',
+	data:{
+		ok: false
+	},
+
+    <div v-if="ok">v-ifによる表示の切替</div>
+	<div v-show="ok">v-showによる表示の切替</div>
+
+okプロパティに、boolの値を持たせてそれを参照。trueであれば表示
+
+v-ifの場合、falseの値が指定された場合はコメントアウトのDomに変換されて実際のHTMLからは消えてしまう。
+v-showの場合は、falseの場合StyleのDisplayプロパティにnoneをもたせることによって表示を消している。
+
+v-ifとv-showの使い分けについて。
+
+v-ifは、上記にもあるようにDomレベルで削除がされる。
+リアクティブでも監視がされていないので、次に描画される時は初期化される。
+たくさんのバインドデータを持っていたり、特定のデータを持っていないとエラーが出る場合、
+こちらを使うとDomそのものを消せるのでエラーが起きる場合はこちらを使うこと。
+また、v-ifは<template>タグによってグループ化が可能になっている。
+<template v-if="ok">
+    <div>ex</div>
+    <p>anple</p>
+</template>
+このように記述すれば、template以下に存在するDomha全てコメントアウトに含めることができる。
+
+v-showは、Domは削除されずにDisplayプロパティにNoneを持たせるため、
+目には見えていなくても内側の値は常にリアクティブで監視がされている。
+内側にディレクトリやコンポーネントが少ない、切替の処理が多いものはこちらを使用するとパフォーマスが高い。
+
+
+v-else-ifとv-elseによるグループ化について
+v-ifディレクティブでは、v-elseディレクティブとv-else-ifディレクティブを用いて
+グループ化された複数の条件をしていして表示を制御することが可能。
+
+		<div v-if = "type === 'A'">
+			typeA
+		</div>
+		<div v-else-if = "type === 'B'">
+			typeB
+		</div>
+		<div v-else>
+			全ての条件をみたさなかった。
+		</div>
+
+var app = new Vue({
+	el: '#app',
+	data:{
+		type: "A"
+	},
+
+このようにDomを直前直後に連結して記述することでグループ化がされる。
+
+
+リストデータの表示と更新についかて。
+
+アプリを作る上でデータは単純なテキストばかりではありません。
+数値やテキスト、真偽値がまざったオブジェクトのデータも存在します。
+
+		enemyList:[
+			{id: 1, name: "スライム", hp:100},
+			{id: 2, name: "ゴブリン", hp:200},
+			{id: 3, name: "ドラゴン", hp:500}
+		]
+
+このようなリストを例にして、要素を繰り返し描画します。
+
+リストのデータを用いて要素を繰り返し描画するには、繰り返し描画させたいタグに大して。
+v-forディレクティブを使用する。
+（今回はliを用いている。）
+<li v-for = "各要素を代入する変数明 in 繰り返したい配列やオブジェクト">
+
+上記のように記述します。
+
+下記に例を記します。
+
+        <ul>
+			<li v-for = "item in enemyList" v-bind:key= "item.id">
+				ID.{{item.id}} {{item.name}} {{item.hp}}
+			</li>
+		</ul>
+
+    var app = new Vue({
+	el: '#app',
+	data:{
+		enemyList:[
+			{id: 1, name: "スライム", hp:100},
+			{id: 2, name: "ゴブリン", hp:200},
+			{id: 3, name: "ドラゴン", hp:500}
+		]
+	}
+
