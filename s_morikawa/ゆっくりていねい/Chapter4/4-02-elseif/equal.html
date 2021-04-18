@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>equal.html</title>
+<link rel="stylesheet" href="../../common/main.css">
+<style>
+#message {
+	padding: 8px;
+	background: #f1f6ff;
+	text-align: center;
+}
+</style>
+</head>
+<body>
+
+<header>
+	<div class="container">
+		<div class="logo"></div>
+        <h1 class="page-title">equal.html</h1>
+	</div>
+</header>
+
+<main>
+	<div class="container">
+
+		<!-- メインコンテンツ -->
+		<p id="message">コンソールを開いて表示結果を確認します。</p>
+		<!-- メインコンテンツ -->
+
+	</div>
+</main>
+
+<footer>
+	<div class="container">
+		<small>JavaScript Study Lab.</small>
+	</div>
+</footer>
+
+<script>
+//〇要件：12時に受付中止し、それ以外を受け付け中にするプログラム
+
+'use strict';
+//new Date();オブジェクトで現在時刻(日付込み)を取得し、変数nowに代入
+let now = new Date();
+//getHours();メソッドで時刻のみを取得し、変数hoursに代入
+let hours = now.getHours();
+let msg = '';
+//hoursが12の時をtrue、それ以外をfalseにし、trueなら'受付を一時中止しています。'、falseなら'受付中です'とmsgに代入する
+if(hours === 12){
+	msg = '受付を一時中止しています。';
+}else{
+	msg = '受付中です。';
+}
+console.log(msg);
+</script>
+</body>
+</html>

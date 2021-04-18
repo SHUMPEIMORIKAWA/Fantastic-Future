@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>より高度な処理の振り分け～else ifと各種演算子～</title>
+<link rel="stylesheet" href="../../common/main.css">
+<style>
+#message {
+	padding: 8px;
+	background: #f1f6ff;
+	text-align: center;
+}
+</style>
+</head>
+<body>
+
+<header>
+	<div class="container">
+		<div class="logo"></div>
+        <h1 class="page-title">より高度な処理の振り分け～else ifと各種演算子～</h1>
+	</div>
+</header>
+
+<main>
+	<div class="container">
+
+		<!-- メインコンテンツ -->
+		<p id="message"></p>
+		<!-- メインコンテンツ -->
+
+	</div>
+</main>
+
+<footer>
+	<div class="container">
+		<small>JavaScript Study Lab.</small>
+	</div>
+</footer>
+
+<script>
+'use strict';
+//nowに現在時刻を代入し、hoursに時刻のみを代入
+let now = new Date();
+let hours = now.getHours();
+let msg = '';
+//条件式にhoursが9以上でかつ(&&)、12より小さいとき、msgに'午前の診察を受け付けています。'と出力
+if(hours >= 9 && hours < 12){
+	msg = '午前の診察を受け付けています。';
+//上記に当てはまらないときで、条件式にhoursが15以上かつ(&&)、19より小さいとき、msgに'午後の診察を受け付けています。'と出力
+}else if(hours >= 15 && hours < 19){
+	msg = '午後の診察を受け付けています。';
+//どれにもあてはまらない場合、msgに'いまの時間、診察は受け付けていません。'と出力
+}else{
+	msg = 'いまの時間、診察は受け付けていません。';
+}
+//messageを取得し、テキストコンテンツでmsgに書き換える
+document.getElementById('message').textContent = msg;
+</script>
+</body>
+</html>

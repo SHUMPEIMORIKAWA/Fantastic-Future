@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>同じ処理を連続して繰り返す〜while〜</title>
+<link rel="stylesheet" href="../../common/main.css">
+</head>
+<body>
+
+<header>
+	<div class="container">
+		<div class="logo"></div>
+		<h1 class="page-title">同じ処理を連続して繰り返す〜while〜</h1>
+	</div>
+</header>
+
+<main>
+	<div class="container">
+
+		<!-- メインコンテンツ -->
+		<div id="effect">
+			
+		</div>
+		<!-- メインコンテンツ -->
+
+	</div>
+</main>
+
+<footer>
+	<div class="container">
+		<small>JavaScript Study Lab.</small>
+	</div>
+</footer>
+
+<script>
+'use strict';
+
+const word = 'ピラミッドはエジプトのお墓';
+let i = 1;
+let element = '';
+//while文で、変数iの値がwordの文字数(word.lengthで求める)以下の時、繰り返すようにする
+while(i <= word.length){
+	//定数partを作り、substrメソッドで取得した値をpartに代入　※文字列.substr(取り出す文字のインデックス番号,取り出す文字数)
+	const part = word.substr(0,i);
+	//iに1ずつ足していき、取り出す文字数を増やしていく
+	i++;
+	//変数elementにPタグ(<p></p>)とその中に変数partをテンプレートリテラルを使い(${}で文字列の中に変数を入れたいから)代入
+	element += `<p>${part}</p>`;
+} 　　　　　　　　　　　　　
+//effectを取得し、そこにinnnerHTML(注:textContentだとPタグが機能しない)でelementを代入
+document.getElementById('effect').innerHTML = element;
+</script>
+</body>
+</html>

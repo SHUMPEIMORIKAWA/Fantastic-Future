@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>一連の処理をまとめて呼び出す〜ファンクション〜</title>
+<link rel="stylesheet" href="../../common/main.css">
+<style>
+h3 {
+	border-bottom: 1px solid #ccc;
+}
+#users img {
+	margin: 8px;
+	border-radius: 50%;
+}
+</style>
+</head>
+<body>
+
+<header>
+	<div class="container">
+		<div class="logo"></div>
+        <h1 class="page-title">一連の処理をまとめて呼び出す〜ファンクション〜</h1>
+	</div>
+</header>
+
+<main>
+	<div class="container">
+
+		<!-- メインコンテンツ -->
+		<h3>ログイン中の友達</h3>
+		<div id="users"></div>
+		<!-- メインコンテンツ -->
+
+	</div>
+</main>
+
+<footer>
+	<div class="container">
+		<small>JavaScript Study Lab.</small>6
+	</div>
+</footer>
+
+<script>
+'use strict';
+
+//定数loginIconsに画像名の配列を代入
+const loginIcons = ['taro.png','','qui.png'];
+
+/*　◎サルでもわかる関数(ファンクション)の書き方
+		const ファンクション名 = function(パラメータ1,パラメータ2,...){
+		//処理内容
+		}
+　　◎ファンクションの呼び出し
+		呼び出すファンクション名(渡す値)
+
+ファンクションgetIconsを作成し、パラメータとしてファイル名を渡す　*/
+const getIcon = function(file){
+	/*もしfileが''でないとき(!==)'images/' + file　という値を返す処理を行うことで、
+	<img>タグのsrc属性に指定できるパスにする*/
+	if(file !== ''){
+		return 'images/' + file;
+	//それ以外の時、ノーアイコン画像を返す処理
+	}else{
+		return 'images/noicon.png';
+	}
+}
+
+let i = 0;
+let imgTags = '';
+//loginIcons.lengthで画像数分回るようにする
+while(i < loginIcons.length){
+	//定数sourseに画像のi番目をパスにする(又はノーアイコンで表示させる)処理を代入
+	const source = getIcon(loginIcons[i]);
+	//imgTgasにデザインとソースを代入
+	imgTags += `<img width = "50" height = "50" src = "${source}">`;
+	//divタグのusersを呼び出し、innerHTMLでimgTagsに書き換える
+	document.getElementById('users').innerHTML = imgTags;
+	//iに１を足す
+	i += 1;
+}
+</script>
+</body>
+</html>
