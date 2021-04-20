@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>&#91;ES6&#93;配列に使える新しい繰り返し〜for...of〜</title>
+<link rel="stylesheet" href="../../common/main.css">
+<style>
+#list {
+    border-collapse: collapse;
+}
+#list td {
+    border: 1px solid #8a919e;
+    padding: 6px 20px;
+}
+</style>
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <div class="logo"></div>
+        <h1 class="page-title">&#91;ES6&#93;配列に使える新しい繰り返し〜for...of〜</h1>
+    </div>
+</header>
+
+<main>
+    <div class="container">
+
+        <!-- メインコンテンツ -->
+        <h3>お品書き</h3>
+        <table id="list">
+
+        </table>
+        <!-- メインコンテンツ -->
+
+    </div>
+</main>
+
+<footer>
+    <div class="container">
+        <small>JavaScript Study Lab.</small>
+    </div>
+</footer>
+
+<script>
+'use strict';
+//変数itemsの中にname,qty(数量),priceの3つのプロパティを含むオブジェクト6つの配列を代入
+let items = [
+    {name:'イカ', qty: 2, price: 100},
+    {name:'大トロ', qty: 1, price: 1000},
+    {name:'イクラ', qty: 2, price: 100},
+    {name:'あなご',qty: 1, price: 200},
+    {name:'アジ',qty: 2, price: 100},
+    {name:'ヒラメ',qty: 1,price: 200}
+];
+//変数tableRow(テーブルの行)に空文字列を代入
+let tableRow = '';
+/*for(データが保存される変数 of 対象となる配列){
+    //処理内容
+}
+を使って、変数itemを配列items分回るようにし、変数tableRowにHTMLの<tr>(行)と<td>(セルの内容)をテンプレート文字列を用いて代入
+*/
+for(let item of items){
+    tableRow += `<tr>
+        <td>${item.name}</td>
+        <td>${item.qty}貫</td>
+        <td>¥${item.price}</td>
+    </tr>`
+};
+//作成したtableRow(テーブルタグの中身)を.<table>タグのID名listにinerHTMLで書き換える
+document.getElementById('list').innerHTML = tableRow;
+</script>
+</body>
+</html>
