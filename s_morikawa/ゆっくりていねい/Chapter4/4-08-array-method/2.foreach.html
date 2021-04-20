@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>foreach.html</title>
+<link rel="stylesheet" href="../../common/main.css">
+</head>
+<body>
+
+<header>
+	<div class="container">
+		<div class="logo"></div>
+        <h1 class="page-title">foreach.html</h1>
+	</div>
+</header>
+
+<main>
+	<div class="container">
+
+		<!-- メインコンテンツ -->
+		コンソールを開いて表示結果を確認します。
+		<!-- メインコンテンツ -->
+
+	</div>
+</main>
+
+<footer>
+	<div class="container">
+		<small>JavaScript Study Lab.</small>
+	</div>
+</footer>
+
+<script>
+
+/*
+配列.forEach(function(data.index){
+	//データに対して実行する処理内容
+});
+は、配列に含まれるデータに対して、順番にfunctionの{~}内の処理を実行する
+date = 配列のデータ, index = データのインデックス番号(配列の何番目か),
+*/
+const weather = ['はれ', 'くもり', '雨', '雪'];
+weather.forEach(function(data, index) {
+	//出力結果は 'はれ' - 0
+	//			'くもり' - 1	
+	//			'雨' - 2	
+	//			'雪' - 3　  	になる
+	console.log(data + ' - ' + index);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>clear.html</title>
+<link rel="stylesheet" href="../../common/main.css">
+<style>
+#sushi-dish {
+	display: flow-root;
+	overflow: hidden;
+}
+.item {
+	float: left;
+	margin: 8px;
+	padding: 6px 0;
+	border: 1px solid #999;
+	border-radius: 50%;
+	width: 100px;
+	text-align: center;
+}
+</style>
+</head>
+<body>
+
+<header>
+	<div class="container">
+		<div class="logo"></div>
+        <h1 class="page-title">clear.html</h1>
+	</div>
+</header>
+
+<main>
+	<div class="container">
+
+		<!-- メインコンテンツ -->
+
+		<div id="sushi-dish">
+			<div id="item0" class="item"></div>
+			<div id="item1" class="item"></div>
+			<div id="item2" class="item"></div>
+			<div id="item3" class="item"></div>
+			<div id="item4" class="item"></div>
+			<div id="item5" class="item"></div>
+		</div>
+		<!--下記にstop-timerというid名のbuttonタグを作成-->>
+		<p><button id="stop-timer">回転を止める</button></p>
+		<!-- メインコンテンツ -->
+
+	</div>
+</main>
+
+<footer>
+	<div class="container">
+		<small>JavaScript Study Lab.</small>
+	</div>
+</footer>
+
+<script>
+'use strict'
+
+let stock = ['イカ', '大トロ', 'イクラ', 'あなご', 'アジ', 'ヒラメ'];
+const intervalId = setInterval(function() {
+	stock.forEach(function(data, index) {
+		const idName = 'item' + index;
+		document.getElementById(idName).textContent = data;
+	});
+
+	const first = stock.shift();
+	stock.push(first);
+}, 2000);
+
+//clearInterval(intervalId); = setIntervalで行われる処理を止める為の処理
+
+//id名'stop-timer'を呼び出し、クリックしたとき変数intervalIdを止める処理を行う
+document.getElementById('stop-timer').onclick = function(){
+	clearInterval(intervalId);
+};
+</script>
+</body>
+</html>

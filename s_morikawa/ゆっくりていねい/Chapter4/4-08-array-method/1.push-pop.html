@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>pushu-pop.html</title>
+<link rel="stylesheet" href="../../common/main.css">
+</head>
+<body>
+
+<header>
+	<div class="container">
+		<div class="logo"></div>
+        <h1 class="page-title">pushu-pop.html</h1>
+	</div>
+</header>
+
+<main>
+	<div class="container">
+
+		<!-- メインコンテンツ -->
+		コンソールを開いて表示結果を確認します。
+		<!-- メインコンテンツ -->
+
+	</div>
+</main>
+
+<footer>
+	<div class="container">
+		<small>JavaScript Study Lab.</small>
+	</div>
+</footer>
+
+<script>
+'use strict';
+/*
+・配列.toStirng()メソッド → 配列のデータ全体をそのまま文字列に変換
+・配列.push(追加したいデータ) → 配列にデータを追加
+・配列.pop() →配列末尾のデータを削除
+・const 変数 = 配列.pop(); → 配列末尾のデータを削除し、そのデータを変数に保存する
+*/
+let items = ['鉄の剣', '木のかぶと', '革のよろい'];
+//%sは、右側のデータを代入するもの
+//%sにitems.toString() = itemsの文字列全部　を代入
+console.log('最初の所持アイテム：%s', items.toString());
+//定数trashに削除した末尾のデータ(革の鎧)を保存し、%sに出力し、削除した後の全体も出力
+const trash = items.pop();
+console.log('削除したアイテム：%s', trash);
+console.log('削除した直後の所持アイテム：%s', items.toString());
+//配列items末尾に回復のステーキを追加し、全体を出力
+items.push('回復のステーキ');
+console.log('現在の所持アイテム：%s', items.toString());
+
+/*
+配列.pushの配列の先頭に追加するver → 配列.unshift(追加したいデータ)
+配列.popの配列の先頭を削除するver → 配列.shift() → 配列先頭のデータを削除
+					    		const 変数 = 配列.shift(); → 配列先頭のデータを削除し、そのデータを変数に保存する
+*/
+</script>
+</body>
+</html>
