@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>フォームの入力内容を調べる〜フォームのDOM操作〜</title>
+<link rel="stylesheet" href="../../common/main.css">
+<style>
+#form {
+	padding: 16px;
+	background: #f1f6ff;
+}
+input[type="text"] {
+	box-sizing: border-box;
+	padding: 4px;
+	width: 300px;
+	font-size: 14px;
+}
+</style>
+</head>
+<body>
+
+<header>
+	<div class="container">
+		<div class="logo"></div>
+        <h1 class="page-title">フォームの入力内容を調べる〜フォームのDOM操作〜</h1>
+	</div>
+</header>
+
+<main>
+	<div class="container">
+
+		<!-- メインコンテンツ -->
+		<form action="#" id="form">
+			<p>
+				<label for="search">検索</label><br>
+		    <!-- input type="text" name="フォームの部品名 -->
+				<input type="text" name="search" id="search">
+			</p>
+			<p>
+				条件
+				<label>
+					<input type="radio" name="category" value="all" checked>すべて
+				</label>
+				<label>
+					<input type="radio" name="category" value="mens">Mens
+				</label>
+				<label>
+					<input type="radio" name="category" value="womens">Womens
+				</label>
+			</p>
+
+			<input type="submit" name="submit" value="検索">
+		</form>
+		<p id="result"></p>
+		<!-- メインコンテンツ -->
+
+	</div>
+</main>
+
+<footer>
+	<div class="container">
+		<small>JavaScript Study Lab.</small>
+	</div>
+</footer>
+
+<script>
+'use strict';
+
+{																		 //<from>タグのid名fromを取得し、onsubmitイベント(<input type>="submit"がクリックされると起こるボタンの機能)
+	document.getElementById('form').onsubmit = function(event){			 //が発生するようにする。(但し、このイベントは送信ボタンではなくその親要素formに発生する為、function内でformを取得する必要がある)
+		event.preventDefault();											 //<form>タグのデフォルト動作(<form>のaction属性で指定されたURLにフォーム内容を送信して次ページに行く)をキャンセル
+		const searchItem = document.getElementById('form').search.value; //検索タグのフォーム部品*1を取得し定数searchItemに代入
+		const category = document.getElementById('form').category.value; //チェックボックスのフォーム部品を取得し定数categoryに代入
+		let word = '';												   	 //
+		if(searchItem !== ''){											 //serchItemが空文字じゃないとき
+			word = `${category} - ${searchItem} 在庫あります。`;		  //例`woman - ハイヒール 在庫あります。`と出力
+		}else{
+			word = '検索するアイテムを指定してください。';					//そうでないとき、'検索するアイテムを指定してください。'と出力
+		}
+		document.getElementById('result').textContent = word;			 //<p>タグresultにwordを書き込み検索結果を表示する
+	};
+}
+/*
+　*1 document.getElementById('<form>のID属性').フォームのname属性.value;　でフォーム部品を取得できる
+(定数categoryはチェックボタンなのでプラスで value="チェックボックスに入力したい言葉" まで取得する)
+*/
+</script>
+</body>
+</html>
